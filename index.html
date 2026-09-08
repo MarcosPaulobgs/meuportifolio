@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcos Paulo — Desenvolvedor Web</title>
+<meta name="description" content="Portfólio de Marcos Paulo, desenvolvedor web. Sites criados para negócios reais e programas em desenvolvimento.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0D1A;
+    --bg-card: #131729;
+    --border: #232842;
+    --blue: #5B6DF7;
+    --blue-soft: #8B96FF;
+    --text: #F3F4F8;
+    --text-soft: #9AA0B8;
+    --radius: 14px;
+    --max: 1100px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1,h2,h3{
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  a{ color: inherit; text-decoration: none; }
+  img{ max-width: 100%; display:block; }
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  :focus-visible{ outline: 2px solid var(--blue-soft); outline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+
+  /* ---------- glow blobs, used once behind the hero ---------- */
+  .glow{
+    position:absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events:none;
+    z-index:0;
+  }
+  .glow-left{ width:420px; height:420px; background: radial-gradient(circle, #3646C4 0%, transparent 70%); left:-140px; top: 60px; }
+  .glow-right{ width:380px; height:380px; background: radial-gradient(circle, #4A3FBE 0%, transparent 70%); right:-120px; top: 220px; }
+
+  /* ---------- header ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(10,13,26,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content: center;
+    padding: 18px 24px;
+    position: relative;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size: 1rem;
+    position:absolute; left:24px;
+    color: var(--text-soft);
+  }
+  .logo span{ color: var(--blue-soft); }
+  .nav-links{
+    display:flex; gap: 36px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-soft);
+  }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; color:var(--text); position:absolute; right:24px; }
+  .nav-toggle svg{ width:26px; height:26px; }
+
+  @media (max-width: 720px){
+    .logo{ position:static; margin-right:auto; }
+    .nav{ justify-content: space-between; }
+    .nav-links{
+      position: absolute; top: 100%; left:0; right:0;
+      flex-direction: column; gap:0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      max-height: 0; overflow: hidden;
+    }
+    .nav-links.open{ max-height: 320px; }
+    .nav-links a{ padding: 14px 24px; border-bottom: 1px solid var(--border); width:100%; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding: 90px 0 100px;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  /* MOLDURA DA FOTO: apenas o quadro por enquanto.
+     Quando tiver a foto, troque o conteúdo de .frame por:
+     <img src="sua-foto.jpg" alt="Marcos Paulo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"> */
+  .frame-wrap{
+    position:relative;
+    width: 180px; height: 180px;
+    margin: 0 auto 36px;
+  }
+  .frame-ring{
+    position:absolute; inset:-14px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(91,109,247,0.35) 0%, transparent 70%);
+    filter: blur(6px);
+  }
+  .frame{
+    position:relative;
+    width:100%; height:100%;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: linear-gradient(160deg, #1B2036, #0E1122);
+    display:flex; align-items:center; justify-content:center;
+    z-index:1;
+  }
+  .frame-mono{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--blue-soft);
+    opacity: 0.5;
+  }
+
+  .hero h1{
+    font-size: clamp(2.1rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: var(--blue-soft);
+    margin-bottom: 12px;
+  }
+  .hero .role{
+    font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+    color: var(--text-soft);
+    font-weight: 500;
+    margin-bottom: 30px;
+  }
+  .hero p.tagline{
+    max-width: 46ch;
+    margin: 0 auto 32px;
+    color: var(--text-soft);
+    font-size: 1rem;
+  }
+  .hero-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn{
+    display:inline-block;
+    padding: 13px 26px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .btn-primary{ background: var(--blue); color: #fff; border-color: var(--blue); }
+  .btn-primary:hover{ background: #4A5AE0; }
+  .btn-ghost{ background: transparent; color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--blue-soft); color: var(--blue-soft); }
+
+  /* ---------- section shell ---------- */
+  section{ padding: 70px 0; position:relative; }
+  section + section{
+    border-top: 1px solid var(--border);
+  }
+  .section-head{ text-align:center; margin-bottom: 44px; }
+  .section-head h2{ font-size: clamp(1.6rem, 3.4vw, 2.2rem); margin-bottom: 10px; }
+  .section-head p{ color: var(--text-soft); }
+
+  /* ---------- sobre ---------- */
+  #sobre .sobre-body{
+    max-width: 720px; margin: 0 auto; text-align:center;
+  }
+  #sobre p{ color: var(--text-soft); margin-bottom: 16px; }
+  .stack-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 20px; justify-content:center; }
+  .stack-item{
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--bg-card);
+    color: var(--text-soft);
+  }
+
+  /* ---------- sites / programas grid ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+  @media (max-width: 900px){ .card-grid{ grid-template-columns: 1fr; } }
+
+  .site-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display:flex; flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .site-card:hover{ border-color: #3A4270; transform: translateY(-3px); }
+
+  .site-cover{
+    position:relative;
+    aspect-ratio: 16 / 10;
+    background: #0E1122;
+    overflow: hidden;
+  }
+  .site-cover img{ width:100%; height:100%; object-fit: cover; }
+  .site-cover.no-cover img{ display:none; }
+  .cover-placeholder{
+    display:none;
+    position:absolute; inset:0;
+    flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    background:
+      repeating-linear-gradient(45deg, #171B31 0 10px, #12162A 10px 20px);
+    color: var(--text-soft);
+    text-align:center;
+    padding: 16px;
+  }
+  .site-cover.no-cover .cover-placeholder{ display:flex; }
+  .cover-placeholder strong{ font-size: 0.78rem; letter-spacing: 0.02em; color: var(--blue-soft); }
+  .cover-placeholder span{ font-size: 0.72rem; max-width: 220px; }
+
+  .site-body{ padding: 22px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .site-body h3{ font-size: 1.1rem; }
+  .site-body p{ color: var(--text-soft); font-size: 0.92rem; margin:0; flex:1; }
+  .site-tag{ font-size: 0.75rem; color: var(--blue-soft); }
+  .site-link{
+    align-self:flex-start;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--blue-soft);
+    border-bottom: 1px solid transparent;
+  }
+  .site-link:hover{ border-color: var(--blue-soft); }
+
+  /* ---------- programas ---------- */
+  .prog-status{
+    display:inline-block;
+    font-size: 0.72rem;
+    color: var(--blue-soft);
+    background: rgba(91,109,247,0.12);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    width: fit-content;
+  }
+  .prog-card{ padding: 24px; }
+  .prog-card h3{ font-size: 1.05rem; margin-bottom: 8px; }
+  .prog-card p{ color: var(--text-soft); font-size: 0.92rem; margin:0; }
+
+  /* ---------- contato / footer ---------- */
+  footer{
+    padding: 70px 0 44px;
+    border-top: 1px solid var(--border);
+    text-align:center;
+  }
+  footer h2{ font-size: clamp(1.5rem,3.4vw,2.1rem); margin-bottom: 22px; }
+  .contact-list{ display:flex; justify-content:center; gap:28px; flex-wrap:wrap; font-size:0.95rem; color: var(--text-soft); }
+  .contact-list a:hover{ color: var(--blue-soft); }
+  .foot-note{
+    margin-top: 50px;
+    font-size: 0.8rem;
+    color: var(--text-soft);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap">
+    <div class="logo">Marcos<span>.dev</span></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#sites">Sites</a>
+      <a href="#programas">Programas</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="glow glow-left"></div>
+    <div class="glow glow-right"></div>
+    <div class="wrap">
+
+      <div class="frame-wrap">
+        <div class="frame-ring"></div>
+        <div class="frame">
+          <img src="https://res.cloudinary.com/gfbljogf/image/upload/v1788833594/WhatsApp_Image_2026-09-07_at_23.12.23.jpg" alt="Marcos Paulo" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        </div>
+      </div>
+
+      <h1>Marcos Paulo</h1>
+      <p class="role">Desenvolvedor Web</p>
+      <p class="tagline">Construo sites rápidos e sob medida para negócios reais, do primeiro contato até o site no ar.</p>
+      <div class="hero-actions">
+        <a href="#sites" class="btn btn-primary">Ver sites</a>
+        <a href="#contato" class="btn btn-ghost">Falar comigo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="wrap sobre-body">
+      <div class="section-head">
+        <h2>Sobre</h2>
+      </div>
+      <p>Sou desenvolvedor web em Santa Inês, BA, começando minha trajetória na área. Construo sites para negócios locais, cuidando de estrutura, responsividade e performance.</p>
+      <p>Trabalho com projetos hospedados na Vercel e uso Cloudinary para otimizar imagens e vídeos, mantendo os sites leves e rápidos de carregar.</p>
+      <div class="stack-list">
+        <span class="stack-item">Next.js</span>
+        <span class="stack-item">React</span>
+        <span class="stack-item">JavaScript</span>
+        <span class="stack-item">CSS Modules</span>
+        <span class="stack-item">Vercel</span>
+        <span class="stack-item">Cloudinary</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITES -->
+  <section id="sites">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Meus Sites</h2>
+        <p>Projetos reais, feitos para marcas e negócios que já existem.</p>
+      </div>
+
+      <div class="card-grid">
+
+        <!-- CARD 1 -->
+        <article class="site-card">
+          <div class="site-cover">
+            <img src="https://res.cloudinary.com/gfbljogf/image/upload/v1788387963/opengraph-image.webp" alt="Capa do site The Best Burger" onerror="this.parentElement.classList.add('no-cover')">
+            <div class="cover-placeholder">
+              <strong>THE BEST BURGER</strong>
+              <span>cole aqui o link da imagem de capa (Cloudinary)</span>
+            </div>
+          </div>
+          <div class="site-body">
+            <span class="site-tag">Hamburgueria · Santa Inês, BA</span>
+            <h3>The Best Burger</h3>
+            <p>Site com cardápio digital e pedido, para uma hamburgueria local.</p>
+            <a class="site-link" href="https://thebest-burger.vercel.app" target="_blank" rel="noopener">Visitar site</a>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="site-card">
+          <div class="site-cover">
+            <img src="https://res.cloudinary.com/b1hqsppo/image/upload/v1788759697/ChatGPT_Image_7_de_set._de_2026_02_38_45.webp" alt="Capa do site Jaguar Hotel" onerror="this.parentElement.classList.add('no-cover')">
+            <div class="cover-placeholder">
+              <strong>JAGUAR HOTEL</strong>
+              <span>cole aqui o link da imagem de capa (Cloudinary)</span>
+            </div>
+          </div>
+          <div class="site-body">
+            <span class="site-tag">Hospedagem</span>
+            <h3>Jaguar Hotel</h3>
+            <p>Site institucional apresentando o hotel e seus serviços.</p>
+            <a class="site-link" href="https://jaguarhotel.vercel.app" target="_blank" rel="noopener">Visitar site</a>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="site-card">
+          <div class="site-cover">
+            <img src="https://res.cloudinary.com/gfbljogf/image/upload/v1788123727/og-image-alonso-academia_1.jpg" alt="Capa do site Alonso Academia" onerror="this.parentElement.classList.add('no-cover')">
+            <div class="cover-placeholder">
+              <strong>ALONSO ACADEMIA</strong>
+              <span>cole aqui o link da imagem de capa (Cloudinary)</span>
+            </div>
+          </div>
+          <div class="site-body">
+            <span class="site-tag">Academia · Santa Inês, BA</span>
+            <h3>Alonso Academia</h3>
+            <p>Site com vídeo de destaque, horários e apresentação da academia.</p>
+            <a class="site-link" href="https://alonso-academia-projeto.vercel.app" target="_blank" rel="noopener">Visitar site</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAS -->
+  <section id="programas">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Programas</h2>
+        <p>Ferramentas próprias, além dos sites — ainda em construção.</p>
+      </div>
+
+      <div class="card-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 720px; margin: 0 auto;">
+        <div class="site-card prog-card">
+          <span class="prog-status">em desenvolvimento</span>
+          <h3>Download de MP3/MP4 do YouTube</h3>
+          <p>Ferramenta própria para baixar áudio e vídeo do YouTube, sem depender de sites externos ou apps como Snaptube. Em breve com mais detalhes por aqui.</p>
+        </div>
+        <div class="site-card prog-card">
+          <span class="prog-status">em desenvolvimento</span>
+          <h3>Assistente pessoal</h3>
+          <p>Assistente local com funções próprias, ainda em fase de construção. Em breve com mais detalhes por aqui.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contato">
+  <div class="wrap">
+    <h2>Vamos construir o próximo site?</h2>
+    <div class="contact-list">
+      <a href="https://wa.me/5573988497971" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="mailto:mpbsplay@outlook.com">mpbsplay@outlook.com</a>
+      <a href="https://www.instagram.com/dev_marcos0/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <div class="foot-note">Marcos Paulo — Desenvolvedor Web · Santa Inês, BA</div>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
